@@ -1,0 +1,203 @@
+#!/bin/bash
+
+# This is an auto-generated file. Tread with caution!
+
+# ----------- [cloud] command handler -----------------------
+read -r -d '' filecontent <<EOR
+cloud_help()
+{
+	echo "cloud [options]"
+	echo "      --label | -l: Assets with label"
+	echo "      --period | -p: Time period for which the assets should be shown"
+}
+
+cloud_cmd()
+{
+    # Remember to specify : in cases where argument is nessary both in short and long options
+    OPTS=\`getopt -o hp:l: --long "period: label: help" -n 'parse-options' -- "\$@"\`
+    eval set -- "\$OPTS"
+    while true; do
+        case "\$1" in
+            -p | --period ) timeperiod="\$2"; shift 2;;
+            -l | --label ) label="\$2"; shift 2;;
+            -h | --help ) cloud_help; return; shift 1;;
+            -- ) shift; break ;;
+            * ) break ;;
+        esac
+    done
+    echo "timeperiod: \$timeperiod"
+    echo "label: \$label"
+}
+EOR
+. <(echo "$filecontent")
+# ----------- end of [cloud] command handler ----------------
+# ----------- [image] command handler -----------------------
+read -r -d '' filecontent <<EOR
+image_help()
+{
+	cat << EOH
+image [options]
+      --label  | -l: Assets with label
+      --period | -p: Time period for which the assets should be shown
+EOH
+}
+
+image_cmd()
+{
+    # Remember to specify : in cases where argument is nessary both in short and long options
+    OPTS=\`getopt -o hp:l: --long "period: label: help" -n 'parse-options' -- "\$@"\`
+    eval set -- "\$OPTS"
+    while true; do
+        case "\$1" in
+            -p | --period ) timeperiod="\$2"; shift 2;;
+            -l | --label ) label="\$2"; shift 2;;
+            -h | --help ) image_help; return; shift 1;;
+            -- ) shift; break ;;
+            * ) break ;;
+        esac
+    done
+    echo "timeperiod: \$timeperiod"
+    echo "label: \$label"
+	echo "Executing image..."
+}
+EOR
+. <(echo "$filecontent")
+# ----------- end of [image] command handler ----------------
+# ----------- [image_list] command handler -----------------------
+read -r -d '' filecontent <<EOR
+image_list_help()
+{
+	echo "image list [options]"
+	echo "      --filter | -f: image list filters"
+	echo "      --label  | -l: image assets with label"
+}
+
+image_list_cmd()
+{
+    # Remember to specify : in cases where argument is nessary both in short and long options
+    OPTS=\`getopt -o hf:l: --long "filter: label: help" -n 'parse-options' -- "\$@"\`
+    eval set -- "\$OPTS"
+    while true; do
+        case "\$1" in
+            -f | --filter ) filter="\$2"; shift 2;;
+            -l | --label ) label="\$2"; shift 2;;
+            -h | --help ) image_list_help; return; shift 1;;
+            -- ) shift; break ;;
+            * ) break ;;
+        esac
+    done
+    echo "filter: \$filter"
+    echo "label: \$label"
+	echo "Executing image list..."
+}
+EOR
+. <(echo "$filecontent")
+# ----------- end of [image_list] command handler ----------------
+# ----------- [image_list_temp] command handler -----------------------
+read -r -d '' filecontent <<EOR
+image_list_temp_help()
+{
+	echo "image list temp [options]"
+	echo "      --filter | -f: image list filters"
+	echo "      --label  | -l: image assets with label"
+}
+
+image_list_temp_cmd()
+{
+    # Remember to specify : in cases where argument is nessary both in short and long options
+    OPTS=\`getopt -o hf:l: --long "filter: label: help" -n 'parse-options' -- "\$@"\`
+    eval set -- "\$OPTS"
+    while true; do
+        case "\$1" in
+            -f | --filter ) filter="\$2"; shift 2;;
+            -l | --label ) label="\$2"; shift 2;;
+            -h | --help ) image_list_help; return; shift 1;;
+            -- ) shift; break ;;
+            * ) break ;;
+        esac
+    done
+    echo "filter: \$filter"
+    echo "label: \$label"
+	echo "Executing image list temp..."
+}
+EOR
+. <(echo "$filecontent")
+# ----------- end of [image_list_temp] command handler ----------------
+# ----------- [image_scan] command handler -----------------------
+read -r -d '' filecontent <<EOR
+image_scan_help()
+{
+	echo "image scan [options]"
+	echo "      --spec | -s: Images to be scanned (regex can be specified)"
+}
+
+image_scan_cmd()
+{
+    # Remember to specify : in cases where argument is nessary both in short and long options
+    OPTS=\`getopt -o hs: --long "spec: help" -n 'parse-options' -- "\$@"\`
+    eval set -- "\$OPTS"
+    while true; do
+        case "\$1" in
+            -s | --spec ) spec="\$2"; shift 2;;
+            -h | --help ) image_scan_help; return; shift 1;;
+            -- ) shift; break ;;
+            * ) break ;;
+        esac
+    done
+    echo "spec: \$spec"
+	echo "Executing image scan..."
+}
+EOR
+. <(echo "$filecontent")
+# ----------- end of [image_scan] command handler ----------------
+# ----------- [version] command handler -----------------------
+read -r -d '' filecontent <<EOR
+version_help()
+{
+	echo ;
+}
+
+version_cmd()
+{
+	echo "Version: v1.0"
+}
+EOR
+. <(echo "$filecontent")
+# ----------- end of [version] command handler ----------------
+# Processing starts here ...
+unset cmd
+while true; do
+	[[ ${1:--} == -* ]] && break #if arg is empty or starts with '-'
+	[[ "$cmd" != "" ]] && cmd="${cmd}_"
+	cmd="$cmd$1"
+	shift
+done
+case "$cmd" in
+	"cloud")
+		cloud_cmd $*
+		;;
+	"image")
+		image_cmd $*
+		;;
+	"image_list")
+		image_list_cmd $*
+		;;
+	"image_list_temp")
+		image_list_temp_cmd $*
+		;;
+	"image_scan")
+		image_scan_cmd $*
+		;;
+	"version")
+		version_cmd $*
+		;;
+	* | help)
+		echo "$0 [cloud image image_list image_list_temp image_scan version]"
+		cloud_help
+		image_help
+		image_list_help
+		image_list_temp_help
+		image_scan_help
+		version_help
+		;;
+esac
