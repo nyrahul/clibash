@@ -2,8 +2,11 @@ clibash is a tool for creating CLI applications based on bash script.
 
 Think of it as a [cobra](https://github.com/spf13/cobra) for bash CLI applications. To use Cobra you need to use golang. What if one needs to write a cli tool using bash script.
 
+Even though clibash mimics the functionality of cobra, the approach taken is different. clibash allows users to specify cli commands in folder structure and user can specify a `handler.sh` for every command. This simplies greatly the way in which new commands (including nested) can be added.
+
 # cli tool generator for bash
 
+Sample folder structure:
 ```
 .
 ├── cloud
@@ -44,3 +47,10 @@ image scan [options]
 
 To add new commands, just add the folder at a given level and add a `handler.sh` file that handles the given command.
 
+# How to use?
+
+1. Create commands folders and add appropriate `handler.sh` in each of those commands.
+2. Edit `.cfg.mk` and specify the CLIOUT target.
+3. Run `make`. This should create the CLIOUT executable file for the cli tool.
+
+In some cases, you need add include additional script source files that would provide utility functions for all other handlers. This can be included by edit INC_SOURCE in `.cfg.mk`.
