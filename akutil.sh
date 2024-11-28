@@ -72,3 +72,4 @@ function ak_cleanup {
 
 trap ak_cleanup EXIT
 
+ak_prereq
