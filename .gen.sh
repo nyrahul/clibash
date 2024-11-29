@@ -112,7 +112,6 @@ EOH
 	done
 
 	# version option
-	. ./.cfg.mk
 	cat <<EOH >> $CLIOUT
 	"version")
 		echo "version: $(echo $VERSION)"
