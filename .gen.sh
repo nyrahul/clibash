@@ -1,6 +1,7 @@
 #!/bin/bash
 
 CLIOUT="cli"
+VERSION="v0.1"
 cli_add_header()
 {
 	cat <<EOH >$CLIOUT
@@ -65,6 +66,7 @@ helpme()
 	cat <<EOH
 $0 [options]
 	--out | -o: Output cli executable script file to generate. [default: $CLIOUT]
+	--cliversion: Version to set for the generated cli. [default: $VERSION]
 	--include | -i: Include/source script files that might be needed for all the command handlers. [optional]
 EOH
 }
@@ -73,13 +75,14 @@ declare -a srcfiles
 parseargs()
 {
     # Remember to specify : in cases where argument is nessary both in short and long options
-    OPTS=`getopt -o ho:i: --long "out: include: help" -n 'parse-options' -- "$@"`
+    OPTS=`getopt -o ho:i: --long "cliversion: out: include: help" -n 'parse-options' -- "$@"`
     eval set -- "$OPTS"
     while true; do
         case "$1" in
 			-i | --include ) srcfiles+=($2); shift 2;;
             -o | --out ) CLIOUT="$2"; shift 2;;
-            -h | --help ) image_help; return; shift 1;;
+            --cliversion ) VERSION="$2"; shift 2;;
+            -h | --help ) helpme; exit 2;;
             -- ) shift; break ;;
             * ) break ;;
         esac
