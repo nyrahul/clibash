@@ -114,8 +114,6 @@ EOH
 	cat <<EOH >> $CLIOUT
 	"version")
 		echo "version: $(echo $VERSION)"
-		echo "build date: $(date)"
-		echo "build location: $(uname -a)"
 		;;
 EOH
 
