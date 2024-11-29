@@ -6,12 +6,18 @@ show_nodes=0
 cluster_list_help()
 {
 	cat <<EOH
-cluster list [options]
+### cluster list [options]
      --spec | -s: [requires value] search filter for cluster names (regex based)
      --nodes | -n: lists nodes from the clusters
      --clusterjq: jq filter to be used on cluster list output (default: '$clusterjq')
                   Example, select clusternames starting with idt '.[] | select(.ClusterName|test("idt.")) | "id=\(.ID),name=\(.ClusterName),status=\(.Status)"'    
      --nodejq: jq filter to be used on node list output (default: '$nodejq')
+
+Examples:
+1. `knoxcli cluster list --clusterjq '.[] | select(.ClusterName|test("idt."))' --nodes`
+	... list all the clusters with idt substring in its names and list all the nodes in those clusters
+2. `knoxcli cluster list --clusterjq '.[] | select((.type == "vm") and (.Status == "Inactive")) | "id=\(.ID),name=\(.ClusterName),status=\(.Status)"'`
+	... list all the Inactive VM clusters and print their ID,name,status
 EOH
 	ak_help
 }
@@ -40,7 +46,6 @@ cluster_list_cmd()
             * ) break ;;
         esac
     done
-	ak_prereq
 	echo "List of clusters:"
 	ak_api "$CWPP_URL/cluster-onboarding/api/v1/get-onboarded-clusters?wsid=$TENANT_ID"
 	echo $json_string | jq -r "$clusterjq"

@@ -31,6 +31,7 @@ ak_help()
 {
 	cat <<EOH
 Please note that AccuKnox configuration ('.accuknox.cfg') would be needed to run the cli.
+Use API_VERBOSE=2 <cmd> ... to dump the request response of all the AccuKnox API calls.
 EOH
 }
 
