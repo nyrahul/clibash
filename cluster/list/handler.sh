@@ -14,12 +14,12 @@ cluster_list_help()
      --nodejq: jq filter to be used on node list output (default: '$nodejq')
 
 Examples:
-1. `knoxcli cluster list --clusterjq '.[] | select(.ClusterName|test("idt."))' --nodes`
+1. knoxcli cluster list --clusterjq '.[] | select(.ClusterName|test("idt."))' --nodes
 	... list all the clusters with idt substring in its names and list all the nodes in those clusters
-2. `knoxcli cluster list --clusterjq '.[] | select((.type == "vm") and (.Status == "Inactive")) | "id=\(.ID),name=\(.ClusterName),status=\(.Status)"'`
+2. knoxcli cluster list --clusterjq '.[] | select((.type == "vm") and (.Status == "Inactive")) | "id=\(.ID),name=\(.ClusterName),status=\(.Status)"'
 	... list all the Inactive VM clusters and print their ID,name,status
+
 EOH
-	ak_help
 }
 
 cluster_list_get_node_list()

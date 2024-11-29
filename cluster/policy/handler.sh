@@ -21,7 +21,6 @@ Example:
 \$knoxcli cluster policy --clusterjq '.[] | select(.ClusterName|test("gke"))' --policyjq '.list_of_policies[] | select(.namespace_name // "notpresent"|test("agents"))'
 	... get all the policies in namespace agents ... if no namespace is present then "notpresent" is substituted.
 EOH
-	ak_help
 }
 
 cluster_policy_dump_policy_file()
