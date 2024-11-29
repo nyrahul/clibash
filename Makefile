@@ -5,5 +5,5 @@ ifneq ($(INC_SOURCE),)
 endif
 
 all:
-	./.gen.sh --out ${CLIOUT} $(INC_OPTS)
+	@./.gen.sh --out ${CLIOUT} $(INC_OPTS)
 

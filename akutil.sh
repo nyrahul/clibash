@@ -65,7 +65,7 @@ ak_prereq()
 {
 	[[ "$DIR" != "" ]] && mkdir -p $DIR
 	command -v jq >/dev/null 2>&1 || { echo >&2 "require 'jq' to be installed. Aborting."; exit 1; }
-	ak_info "tenant-id: $TENANT_ID"
+	ak_dbg "tenant-id: $TENANT_ID"
 }
 
 function ak_cleanup {

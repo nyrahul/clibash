@@ -135,5 +135,5 @@ for src in ${srcfiles[*]}; do
 	source_file $src
 done
 source_level "./"
-loginfo "List of commands: ${cmdarr[*]}"
+logdbg "List of commands: ${cmdarr[*]}"
 handle_cmds
