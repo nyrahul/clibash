@@ -54,3 +54,5 @@ To add new commands, just add the folder at a given level and add a `handler.sh`
 3. Run `make`. This should create the CLIOUT executable file for the cli tool.
 
 In some cases, you need add include additional script source files that would provide utility functions for all other handlers. This can be included by edit INC_SOURCE in `.cfg.mk`.
+
+* To add a logo, use `logo.sh` in the target base folder path.
