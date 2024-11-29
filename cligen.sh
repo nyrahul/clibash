@@ -120,6 +120,7 @@ EOH
 	# help option
 	cat << EOH >> $CLIOUT
 	* | help)
+		[[ "\$(type -t clilogo)" == "function" ]] && clilogo
 		echo "# \$0 command options"
 		echo "\\\`\\\`\\\`"
 		echo "\$0"
@@ -145,6 +146,7 @@ EOH
 
 parseargs $*
 cli_add_header
+[[ -f "logo.sh" ]] && echo "sourcing logo ..." && source_file "logo.sh"
 for src in `echo $INC_SH`; do
 	loginfo "including source [$src] ..."
 	source_file $src
