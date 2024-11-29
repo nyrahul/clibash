@@ -6,17 +6,17 @@ show_nodes=0
 cluster_list_help()
 {
 	cat <<EOH
-### cluster list [options]
-     --spec | -s: [requires value] search filter for cluster names (regex based)
-     --nodes | -n: lists nodes from the clusters
-     --clusterjq: jq filter to be used on cluster list output (default: '$clusterjq')
-                  Example, select clusternames starting with idt '.[] | select(.ClusterName|test("idt.")) | "id=\(.ID),name=\(.ClusterName),status=\(.Status)"'    
-     --nodejq: jq filter to be used on node list output (default: '$nodejq')
+### [cluster list] command
+* --spec | -s: [requires value] search filter for cluster names (regex based)
+* --nodes | -n: lists nodes from the clusters
+* --clusterjq: jq filter to be used on cluster list output (default: '$clusterjq')
+* --nodejq: jq filter to be used on node list output (default: '$nodejq')
 
 Examples:
-1. knoxcli cluster list --clusterjq '.[] | select(.ClusterName|test("idt."))' --nodes
+
+1. knoxcli cluster list --clusterjq '.[] | select(.ClusterName|test("idt."))' --nodes <br>
 	... list all the clusters with idt substring in its names and list all the nodes in those clusters
-2. knoxcli cluster list --clusterjq '.[] | select((.type == "vm") and (.Status == "Inactive")) | "id=\(.ID),name=\(.ClusterName),status=\(.Status)"'
+2. knoxcli cluster list --clusterjq '.[] | select((.type == "vm") and (.Status == "Inactive")) | "id=\(.ID),name=\(.ClusterName),status=\(.Status)"' <br>
 	... list all the Inactive VM clusters and print their ID,name,status
 
 EOH

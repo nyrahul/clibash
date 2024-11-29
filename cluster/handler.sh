@@ -1,6 +1,11 @@
 cluster_help()
 {
-	echo "cluster [options]"
+	cat <<EOH
+## [cluster] command
+
+[cluster] command operates on Kubernetes and Virtual Machines based clusters.
+
+EOH
 }
 
 cluster_cmd()

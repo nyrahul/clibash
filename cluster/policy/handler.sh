@@ -6,19 +6,18 @@ operation="list"
 cluster_policy_help()
 {
 	cat <<EOH
-cluster policy [options]
-     --operation [list | dump]: Dump the policies in --dumpdir folder or list the policies
-     --dumpdir | -d: Policy dump directory
-     --clusterjq: jq filter to be used on cluster list output (default: '$clusterjq')
-                  Example, select clusternames with idt substring in the clustername '.[] | select(.ClusterName|test("idt"))'
-     --policyjq: jq filter to be used on policy list output (default: '$policyjq')
-                  Example, select policies with name having substring 'crypto' '.list_of_policies[] | select(.name|test("crypto"))'
+### [cluster policy] command
+* --operation [list | dump]: Dump the policies in --dumpdir folder or list the policies
+* --dumpdir | -d: Policy dump directory
+* --clusterjq: jq filter to be used on cluster list output (default: '$clusterjq')
+* --policyjq: jq filter to be used on policy list output (default: '$policyjq')
 
-Example:
-\$knoxcli cluster policy --clusterjq '.[] | select(.ClusterName|test("gke"))' --policyjq '.list_of_policies[] | select(.name|test("crypto"))'
+Examples:
+
+1. knoxcli cluster policy --clusterjq '.[] | select(.ClusterName|test("gke"))' --policyjq '.list_of_policies[] | select(.name|test("crypto"))' <br>
 	... get all the policies have 'crypto' in their name for all the clusters having 'gke' in their name
 
-\$knoxcli cluster policy --clusterjq '.[] | select(.ClusterName|test("gke"))' --policyjq '.list_of_policies[] | select(.namespace_name // "notpresent"|test("agents"))'
+2. knoxcli cluster policy --clusterjq '.[] | select(.ClusterName|test("gke"))' --policyjq '.list_of_policies[] | select(.namespace_name // "notpresent"|test("agents"))' <br>
 	... get all the policies in namespace agents ... if no namespace is present then "notpresent" is substituted.
 EOH
 }

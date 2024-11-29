@@ -1,5 +1,6 @@
 #!/bin/bash
 
+CLIOUT="cli"
 cli_add_header()
 {
 	cat <<EOH >$CLIOUT
@@ -63,7 +64,7 @@ helpme()
 {
 	cat <<EOH
 $0 [options]
-	--out | -o: Output cli executable script file to generate. [mandatory]
+	--out | -o: Output cli executable script file to generate. [default: $CLIOUT]
 	--include | -i: Include/source script files that might be needed for all the command handlers. [optional]
 EOH
 }
@@ -83,7 +84,6 @@ parseargs()
             * ) break ;;
         esac
     done
-	[[ "$CLIOUT" == "" ]] && echo "out file not specified" && exit 2
 }
 
 handle_cmds()
@@ -119,8 +119,23 @@ EOH
 EOH
 
 	# help option
-	echo -en "\t* | help)\n" >> $CLIOUT
-	echo -en "\t\techo \"\$0 [${cmdarr[*]}]\"\n" >> $CLIOUT
+	cat << EOH >> $CLIOUT
+	* | help)
+		echo "# \$0 command options"
+		echo "\\\`\\\`\\\`"
+		echo "\$0"
+EOH
+	for cmd in ${cmdarr[*]}; do
+		cat <<EOH >> $CLIOUT
+		echo -en "\\t${cmd//_/ }\\n"
+EOH
+	done
+	cat <<EOH >> $CLIOUT
+		echo -en "\\tversion\\n"
+		echo -en "\\thelp\\n"
+		echo "\\\`\\\`\\\`"
+
+EOH
 	for cmd in ${cmdarr[*]}; do
 		cat <<EOH >> $CLIOUT
 		${cmd}_help

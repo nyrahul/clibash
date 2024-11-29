@@ -1,9 +1,9 @@
 image_help()
 {
 	cat << EOH
-image [options]
-      --label  | -l: Assets with label
-      --period | -p: Time period for which the assets should be shown
+## [image] command
+[image] commands operates on container images and corresponding findings.
+
 EOH
 }
 

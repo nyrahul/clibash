@@ -9,21 +9,23 @@ filters=""
 cluster_alerts_help()
 {
 	cat <<EOH
-### cluster alerts [options]
-     --clusterjq [jq-spec]: jq filter to be used on cluster list output (default: '$clusterjq')
-     --alertjq [jq-spec]: jq filter to be used on cluster list output (default: '$alertjq')
-	 --stime [datetime]: start time in epoch format (default: '$stime', $stimestr)
-	 --etime [datetime]: end time in epoch format (default: '$etime', now)
-	 --type [alert-type]: alert-type (default: "$alerttype")
-	 --filters [filter-spec]: Alert filters to be passed to API (default: '$filters')
+### [cluster alerts] command
+
+Options supported:
+* --clusterjq [jq-spec]: jq filter to be used on cluster list output (default: '$clusterjq')
+* --alertjq [jq-spec]: jq filter to be used on cluster list output (default: '$alertjq')
+* --stime [datetime]: start time in epoch format (default: '$stime', $stimestr)
+* --etime [datetime]: end time in epoch format (default: '$etime', now)
+* --type [alert-type]: alert-type (default: "$alerttype")
+* --filters [filter-spec]: Alert filters to be passed to API (default: '$filters')
 
 Examples:
-1. knoxcli cluster alerts --alertjq '.response[] | select(.Resource // "unknown" | test("ziggy"))'
+1. knoxcli cluster alerts --alertjq '.response[] | select(.Resource // "unknown" | test("ziggy"))' <br>
 	... list all the alerts containing 'ziggy' in the Resource filter
-2. knoxcli cluster alerts --filters '{"field":"HostName","value":"store54055","op":"match"}' --alertjq '.response[] | "hostname=\(.HostName),resource=\(.Resource//""),UID=\(.UID),operation=\(.Operation)"'
+2. knoxcli cluster alerts --filters '{"field":"HostName","value":"store54055","op":"match"}' --alertjq '.response[] | "hostname=\(.HostName),resource=\(.Resource//""),UID=\(.UID),operation=\(.Operation)"' <br>
 	... get all alerts for HostName="store54055" and print the response in following csv format hostname,resource,UID,operation
 
-> Difference between --alertjq and --filters?
+> Difference between --alertjq and --filters? <br>
 > --filters are passed directly to the AccuKnox API. --alertjq operates on the output of the AccuKnox API response. It is recommended to use --filters as far as possible. However, you can use regex/jq based matching criteria with --alertjq.
 
 EOH
