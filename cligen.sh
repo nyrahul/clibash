@@ -38,10 +38,16 @@ logerr()
 declare -a cmdarr
 source_file()
 {
-	[[ ! -f "$1" ]] && logerr "[$1] file not found" && return
+	content=""
+	if [[ $1 =~ http* ]]; then # source contents from a URL
+		content=$(curl -s $1)
+	elif [ -f "$1" ]; then # Source contents from a file
+		content=$(cat $1)
+	fi
+	[[ "$content" == "" ]] && echo "could not fetch contents from [$1]" && return 1
 	cat <<EOH >> $CLIOUT
 read -r -d '' filecontent <<EOR
-$(cat $1 | sed -e 's/\$/\\\$/g' -e 's/`/\\`/g')
+$(echo "$content" | sed -e 's/\$/\\\$/g' -e 's/`/\\`/g')
 EOR
 . <(echo "\$filecontent")
 EOH
@@ -147,6 +153,7 @@ EOH
 parseargs $*
 cli_add_header
 [[ -f "logo.sh" ]] && echo "sourcing logo ..." && source_file "logo.sh"
+source_file "https://raw.githubusercontent.com/nyrahul/argutil/refs/heads/main/argutil.sh"
 for src in `echo $INC_SH`; do
 	loginfo "including source [$src] ..."
 	source_file $src
