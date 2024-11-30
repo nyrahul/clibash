@@ -144,7 +144,7 @@ EOH
 EOH
 	for cmd in ${cmdarr[*]}; do
 		cat <<EOH >> $CLIOUT
-		${cmd}_help
+		${cmd}_cmd --help
 EOH
 	done
 	echo -en "\t\t;;\nesac" >> $CLIOUT
@@ -152,12 +152,12 @@ EOH
 
 parseargs $*
 cli_add_header
-[[ -f "logo.sh" ]] && echo "sourcing logo ..." && source_file "logo.sh"
-source_file "https://raw.githubusercontent.com/nyrahul/argutil/refs/heads/main/argutil.sh"
 for src in `echo $INC_SH`; do
 	loginfo "including source [$src] ..."
 	source_file $src
 done
+#source_file "http://localhost:9090/argutil.sh"
+source_file "https://raw.githubusercontent.com/nyrahul/argutil/refs/heads/main/argutil.sh"
 source_level "./"
 loginfo "sourced commands: ${cmdarr[*]}"
 handle_cmds
