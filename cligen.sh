@@ -127,7 +127,7 @@ EOH
 	cat << EOH >> $CLIOUT
 	* | help)
 		[[ "\$(type -t clilogo)" == "function" ]] && clilogo
-		echo "# \$0 command options"
+		echo "# \$(basename \$0) command options"
 		echo "\\\`\\\`\\\`"
 		echo "\$0"
 EOH
